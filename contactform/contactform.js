@@ -93,14 +93,14 @@ jQuery(document).ready(function($) {
     var action = $(this).attr('action');
     if( ! action ) {
       action = 'contactform/contactform.php';
+      
     }
     $.ajax({
       type: "POST",
       url: action,
       data: str,
       success: function(msg) {
-        // alert(msg);
-        if (msg == 'OK') {
+        if (msg == '') {
           $("#sendmessage").addClass("show");
           $("#errormessage").removeClass("show");
           $('.contactForm').find("input, textarea").val("");
