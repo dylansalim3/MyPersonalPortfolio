@@ -1,8 +1,12 @@
 jQuery(document).ready(function ($) {
   "use strict";
 
+  console.log("test");
+
   //Contact
-  $('form.contactForm').submit(function () {
+  $('form.contactForm').submit(function (e) {
+    // e.stopImmediatePropagation();
+
     var f = $(this).find('.form-group'),
       ferror = false,
       emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
@@ -93,29 +97,32 @@ jQuery(document).ready(function ($) {
     else var str = $(this).serialize();
     var action = $(this).attr('action');
     if (!action) {
-      action = 'https://note-it-server.herokuapp.com/';
-
+      action = 'http://localhost:3000/mail-service/send-email';
     }
 
-    var senderName = $(this).children("#name");
-    var senderEmail = $(this).children("#email"); 
-    var senderSubject = $(this).children("#subject");
-    var senderSubject = $(this).children("#subject");
+    var formGroup = $(this).find('.form-group');
 
+    var senderName = formGroup.children("#name").val();
+    var senderEmail = formGroup.children("#email").val(); 
+    var senderSubject = formGroup.children("#subject").val();
+    var senderBody = formGroup.children("#message").val();
 
     var receiverEmail = "dylansalim015@gmail.com";
-    var emailSubject;
-    var emailBody;
-
-
+    var emailSubject = `Personal Portfolio : <${senderEmail}> ${senderSubject}`;
+    var emailBody = `${senderBody} sent by ${senderName} via ${senderEmail}`;
 
 
     $.ajax({
       type: "POST",
       url: action,
-      data: str,
+      data: {
+            "email":receiverEmail,
+            "emailSubject":emailSubject,
+            "emailBody":emailBody
+          },
       success: function (msg) {
-        if (msg == '') {
+        console.log(msg.success);
+        if (msg.success) {
           $("#sendmessage").addClass("show");
           $("#errormessage").removeClass("show");
           $('.contactForm').find("input, textarea").val("");
@@ -127,6 +134,7 @@ jQuery(document).ready(function ($) {
 
       }
     });
+    
     return false;
   });
 
