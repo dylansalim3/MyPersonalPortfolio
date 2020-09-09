@@ -1,8 +1,6 @@
 jQuery(document).ready(function ($) {
   "use strict";
 
-  console.log("test");
-
   //Contact
   $('form.contactForm').submit(function (e) {
     // e.stopImmediatePropagation();
@@ -97,7 +95,7 @@ jQuery(document).ready(function ($) {
     else var str = $(this).serialize();
     var action = $(this).attr('action');
     if (!action) {
-      action = 'http://localhost:3000/mail-service/send-email';
+      action = 'https://note-it-server.herokuapp.com/mail-service/send-email';
     }
 
     var formGroup = $(this).find('.form-group');
