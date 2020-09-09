@@ -1,13 +1,14 @@
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
   "use strict";
 
   //Contact
-  $('form.contactForm').submit(function() {
+  $('form.contactForm').submit(function () {
     var f = $(this).find('.form-group'),
       ferror = false,
       emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
 
-    f.children('input').each(function() { // run all inputs
+
+    f.children('input').each(function () { // run all inputs
 
       var i = $(this); // current input
       var rule = i.attr('data-rule');
@@ -42,7 +43,7 @@ jQuery(document).ready(function($) {
             break;
 
           case 'checked':
-            if (! i.is(':checked')) {
+            if (!i.is(':checked')) {
               ferror = ierror = true;
             }
             break;
@@ -57,7 +58,7 @@ jQuery(document).ready(function($) {
         i.next('.validation').html((ierror ? (i.attr('data-msg') !== undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
       }
     });
-    f.children('textarea').each(function() { // run all inputs
+    f.children('textarea').each(function () { // run all inputs
 
       var i = $(this); // current input
       var rule = i.attr('data-rule');
@@ -91,15 +92,29 @@ jQuery(document).ready(function($) {
     if (ferror) return false;
     else var str = $(this).serialize();
     var action = $(this).attr('action');
-    if( ! action ) {
-      action = 'contactform/contactform.php';
-      
+    if (!action) {
+      action = 'https://note-it-server.herokuapp.com/';
+
     }
+
+    var senderName = $(this).children("#name");
+    var senderEmail = $(this).children("#email"); 
+    var senderSubject = $(this).children("#subject");
+    var senderSubject = $(this).children("#subject");
+
+
+    var receiverEmail = "dylansalim015@gmail.com";
+    var emailSubject;
+    var emailBody;
+
+
+
+
     $.ajax({
       type: "POST",
       url: action,
       data: str,
-      success: function(msg) {
+      success: function (msg) {
         if (msg == '') {
           $("#sendmessage").addClass("show");
           $("#errormessage").removeClass("show");

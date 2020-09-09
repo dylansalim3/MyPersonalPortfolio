@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <title>Dylan Salim - Portfolio</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+  <meta content="dylan salim, web developer, software developer" name="keywords">
+  <meta content="dylan salim portfolio" name="description">
 
   <!-- Favicons -->
   <link href="img/favicon.png" rel="icon">
@@ -427,7 +427,7 @@
                     </h5>
                   </div>
                   <div>
-                      <form action=""<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"" method="POST" role="form" class="contactForm">
+                      <form method="POST" role="form" class="contactForm">
                       <div id="sendmessage">Your message has been sent. Thank you!</div>
                       <div id="errormessage"></div>
                       <div class="row">
@@ -531,43 +531,4 @@
   
 </body>
 </html>
-<?php
-  require 'vendor/autoload.php'; 
-  // $name='';
-  // $email_add='';
-  // $subject='';
-  // $message='';
-  $API_KEY="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";
-  if($_SERVER["REQUEST_METHOD"] == "POST")
-  {
-    $name = $_POST['name'];
-    $email_add = $_POST['email'];
-    $subject = $_POST['subject'];
-    $message = $_POST['message'];
-  
-  $email = new \SendGrid\Mail\Mail(); 
-  $email->setFrom($email_add, "MyWebsite");
-  $email->setSubject($subject);
-  $email->addTo("dylansalim3@gmail.com", $name);
-  $email->addContent("text/plain", $message);
-  // $email->addContent(
-  //     "text/html", "<strong>and easy to do anywhere, even with PHP</strong>"
-  // );
-  $sendgrid = new \SendGrid($API_KEY);
-
-//   if($sendgrid->send($email))
-// {
-//   echo "email sent successfully";
-// }  
-
-try {
-      $response = $sendgrid->send($email);
-      // print $response->statusCode() . "\n";
-      // print_r($response->headers());
-      // print $response->body() . "\n";
-  } catch (Exception $e) {
-      echo 'Caught exception: '. $e->getMessage() ."\n";
-  }
-}
-  ?>
 
